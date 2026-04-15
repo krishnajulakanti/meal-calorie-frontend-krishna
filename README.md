@@ -8,6 +8,22 @@ https://meal-calorie-frontend-krishna.vercel.app/
 
 ## Screenshots
 
+![Login](public/images/Login.png)
+
+![Register](public/images/Register.png)
+
+![Login With Creds](public/images/Login-with-creds.png)
+
+![Dashboard With Toaster](public/images/Dashboard-with-Toaster.png)
+
+![Calorie Search](public/images/Calorie-search.png)
+
+![Calorie Search With Toaster](public/images/Calorie-search-with-toaster.png)
+
+![Macronutrient Bar](public/images/MacronutrientBar.png)
+
+![Recent Searches Dark Mode](public/images/Recent-searches-Dark-mode.png)
+
 ## Tech Stack
 
 | Layer            | Technology                      |
