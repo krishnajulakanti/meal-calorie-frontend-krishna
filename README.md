@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Meal Calorie Counter
 
-## Getting Started
+A production-ready Next.js frontend for the Meal Calorie Count Generator API. Users can register, log in, search for any dish, and get detailed calorie and macronutrient breakdowns powered by the USDA FoodData Central database.
 
-First, run the development server:
+## Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Screenshots
+
+## Tech Stack
+
+| Layer            | Technology                      |
+| ---------------- | ------------------------------- |
+| Framework        | Next.js 14+ (App Router)        |
+| Language         | TypeScript                      |
+| Styling          | Tailwind CSS + shadcn/ui        |
+| State Management | Zustand with persist middleware |
+| Form Validation  | React Hook Form + Zod           |
+| Package Manager  | pnpm                            |
+
+## Features
+
+- User registration and login with JWT authentication
+- Calorie and macronutrient Search for any dish via USDA FoodData Central
+- Macro progress bars for visual breakdown
+- Meal search history stored in Zustand (persisted in localStorage)
+- Dashboard with stats — total searches, average calories, last search
+- Autocomplete suggestions for common dishes
+- Rate limit countdown timer on 429 responses
+- Full error handling for all API error codes (400, 401, 403, 404, 409, 422, 429, 500)
+- Dark / Light mode toggle
+- Fully responsive — mobile, tablet, desktop
+- Guarded routes — unauthenticated users redirected to /login
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── login/page.tsx
+│   ├── register/page.tsx
+│   ├── dashboard/page.tsx
+│   └── calories/page.tsx
+├── components/
+│   ├── AuthForm.tsx
+│   ├── MealForm.tsx
+│   ├── ResultCard.tsx
+│   ├── MealHistoryTable.tsx
+│   ├── NavBar.tsx
+│   ├── ThemeToggle.tsx
+│   └── ui/
+├── hooks/
+│   └── useAuthGuard.ts
+├── lib/
+│   ├── api.ts
+│   └── validations.ts
+├── stores/
+│   ├── authStore.ts
+│   └── mealStore.ts
+└── types/
+    └── index.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Instructions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js v18+
+- pnpm
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Clone the repo
+git clone https://github.com/krishnajulakanti/meal-calorie-frontend-krishna.git
+cd meal-calorie-frontend-krishna
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Install dependencies
+pnpm install
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Create environment file
+.env.example
+.env.local
 
-## Deploy on Vercel
+# Start development server
+pnpm dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Environment Variables
+
+| Variable                 | Value                     |
+| ------------------------ | ------------------------- |
+| NEXT_PUBLIC_API_BASE_URL | https://xpcc.devb.zeak.io |
+
+## Trade-offs and Decisions taken
+
+- **AuthForm shared component** — single component handles both login and register via a `mode` prop, reducing duplication
+- **Zustand over Context API** — simpler boilerplate, built-in persist middleware for localStorage, better devtools support
+- **Meal history in localStorage** — as the backend has no endpoint to store search history, so localStorage via Zustand persist has been configured
+- **Autocomplete from static list** — no dedicated autocomplete API available; static suggestions improve UX without extra API calls
+- **react-hook-form** — used react-hook-form directly with shadcn primitives (Input, Label, Button) to avoid dependency issues with the updated shadcn CLI
+
+## API Reference
+
+Base URL: `https://xpcc.devb.zeak.io`
+
+| Method | Endpoint           | Auth         | Description              |
+| ------ | ------------------ | ------------ | ------------------------ |
+| POST   | /api/auth/register | No           | Register new user        |
+| POST   | /api/auth/login    | No           | Login, receive JWT       |
+| POST   | /api/get-calories  | Bearer token | Get calorie + macro data |
