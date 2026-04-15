@@ -4,6 +4,8 @@ A production-ready Next.js frontend for the Meal Calorie Count Generator API. Us
 
 ## Live Demo
 
+https://meal-calorie-frontend-krishna.vercel.app/
+
 ## Screenshots
 
 ## Tech Stack
